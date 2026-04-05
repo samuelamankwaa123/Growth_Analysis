@@ -14,22 +14,29 @@ jobs:
             pip install pandas numpy matplotlib seaborn scikit-learn jupyter nbconvert notebook
 
       - run:
-          name: Show files
+          name: Debug workspace
           command: |
+            echo "Current directory:"
+            pwd
+            echo "Git branch:"
+            git rev-parse --abbrev-ref HEAD || true
+            echo "Files in repo root:"
             ls -la
+            echo "All files up to depth 2:"
+            find . -maxdepth 2 -type f | sort
 
       - run:
-          name: Validate notebook exists
+          name: Validate files exist
           command: |
-            test -f growth_analysis_new.ipynb
-            test -f 2017_Yellow_Taxi_Trip_Data.csv
+            test -f "growth_analysis_new.ipynb"
+            test -f "2017_Yellow_Taxi_Trip_Data.csv"
 
       - run:
           name: Run notebook
           command: |
             jupyter nbconvert \
               --to notebook \
-              --execute growth_analysis_new.ipynb \
+              --execute "growth_analysis_new.ipynb" \
               --output executed.ipynb \
               --ExecutePreprocessor.timeout=600 \
               --ExecutePreprocessor.kernel_name=python3
