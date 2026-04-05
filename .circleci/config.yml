@@ -4,13 +4,14 @@ jobs:
   build_job:
     docker:
       - image: cimg/python:3.10
+
     steps:
       - checkout
 
       - run:
           name: Install dependencies
           command: |
-            pip install pandas numpy matplotlib jupyter nbconvert
+            pip install pandas numpy matplotlib seaborn scikit-learn jupyter nbconvert notebook
 
       - run:
           name: Show files
@@ -20,7 +21,7 @@ jobs:
       - run:
           name: Run notebook
           command: |
-            jupyter nbconvert --to notebook --execute growth-analysis.ipynb
+            jupyter nbconvert --to notebook --execute growth-analysis.ipynb --output executed.ipynb
 
       - run:
           name: Simple pipeline test
