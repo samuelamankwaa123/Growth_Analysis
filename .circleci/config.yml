@@ -4,11 +4,22 @@ jobs:
   build:
     docker:
       - image: cimg/python:3.10
+
     steps:
       - checkout
+
+      - run:
+          name: Install dependencies
+          command: pip install pandas numpy matplotlib
+
       - run:
           name: Show files
           command: ls -la
+
+      - run:
+          name: Run Python script
+          command: python growth-analysis.ipynb
+
       - run:
           name: Simple pipeline test
           command: echo "CircleCI pipeline is running successfully"
