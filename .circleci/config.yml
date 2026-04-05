@@ -19,14 +19,19 @@ jobs:
             ls -la
 
       - run:
-          name: Run notebook
+          name: Run notebook (debug mode)
           command: |
-            jupyter nbconvert --to notebook --execute growth-analysis.ipynb --output executed.ipynb
+            jupyter nbconvert \
+              --to notebook \
+              --execute growth-analysis.ipynb \
+              --output executed.ipynb \
+              --ExecutePreprocessor.timeout=600 \
+              --ExecutePreprocessor.kernel_name=python3
 
       - run:
-          name: Simple pipeline test
+          name: Confirm output
           command: |
-            echo "CircleCI pipeline is running successfully"
+            ls -la
 
 workflows:
   version: 2
