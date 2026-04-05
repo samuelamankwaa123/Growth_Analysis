@@ -14,17 +14,30 @@ jobs:
             pip install pandas numpy matplotlib seaborn scikit-learn jupyter nbconvert notebook
 
       - run:
-          name: Debug workspace
+          name: Show all files (DEBUG)
           command: |
+            echo "Current directory:"
             pwd
+            echo
+            echo "Root file listing:"
             ls -la
-            find . -maxdepth 2 -type f | sort
+            echo
+            echo "All files recursively:"
+            find . -type f | sort
+            echo
+            echo "Git branch:"
+            git rev-parse --abbrev-ref HEAD || true
 
       - run:
-          name: Validate required files exist
+          name: Validate required files
           command: |
+            echo "Checking growth_analysis_ci.ipynb..."
             test -f "growth_analysis_ci.ipynb"
+
+            echo "Checking sample_data.csv..."
             test -f "sample_data.csv"
+
+            echo "All required files found."
 
       - run:
           name: Run notebook in CI mode
@@ -38,7 +51,7 @@ jobs:
               --ExecutePreprocessor.kernel_name=python3
 
       - run:
-          name: Confirm outputs
+          name: Confirm output
           command: |
             ls -la
             test -f "executed.ipynb"
