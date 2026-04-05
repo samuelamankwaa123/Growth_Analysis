@@ -11,7 +11,7 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            pip install pandas numpy matplotlib seaborn scikit-learn jupyter nbconvert notebook
+            pip install pandas numpy matplotlib seaborn scikit-learn jupyter nbconvert notebook kagglehub
 
       - run:
           name: Show files
@@ -19,7 +19,7 @@ jobs:
             ls -la
 
       - run:
-          name: Run notebook (debug mode)
+          name: Run notebook
           command: |
             jupyter nbconvert \
               --to notebook \
