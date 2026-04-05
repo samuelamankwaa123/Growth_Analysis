@@ -1,31 +1,34 @@
 version: 2.1
 
 jobs:
-  build:
+  build_job:
     docker:
       - image: cimg/python:3.10
-
     steps:
       - checkout
 
       - run:
           name: Install dependencies
-          command: pip install pandas numpy matplotlib
+          command: |
+            pip install pandas numpy matplotlib jupyter nbconvert
 
       - run:
           name: Show files
-          command: ls -la
+          command: |
+            ls -la
 
       - run:
-          name: Run Python script
-          command: python growth-analysis.ipynb
+          name: Run notebook
+          command: |
+            jupyter nbconvert --to notebook --execute growth-analysis.ipynb
 
       - run:
           name: Simple pipeline test
-          command: echo "CircleCI pipeline is running successfully"
+          command: |
+            echo "CircleCI pipeline is running successfully"
 
 workflows:
   version: 2
   build_and_test:
     jobs:
-      - build
+      - build_job
